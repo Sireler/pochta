@@ -75,7 +75,7 @@
                                 </div>
 
                                 <div class="col-auto float-right align-items-center">
-                                    <div class="row">
+                                    <div class="row pt-3">
                                         <div class="col-auto">
                                             <a class="btn-link-main" href="#">Для бизнеса</a>
                                         </div>
@@ -90,12 +90,16 @@
                                         @else
                                             <div class="col-auto dropdown">
 
-                                                <a class="btn-link-main dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <a class="btn-link-main" id="dropdownMenuButton" data-toggle="dropdown" >
                                                     {{ Auth::user()->name }}
                                                 </a>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                        <a class="dropdown-item" href="#">Action</a>
-                                                        <a class="dropdown-item" href="#">Another action</a>
+                                                        <a class="dropdown-item" href="#">Сервис валидации</a>
+                                                        <a class="dropdown-item" href="{{ route('logout') }}"
+                                                           onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                                            {{ __('Выйти') }}
+                                                        </a>
                                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                                             @csrf
                                                         </form>
@@ -108,7 +112,7 @@
                         </div>
                     </div>
 
-        <main class="py-4">
+        <main class="py-2">
             @yield('content')
         </main>
     </div>

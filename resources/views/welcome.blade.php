@@ -1,12 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+
         <div class="section">
             <div class="container my-3">
                 <div class="row">
                     <div class="col border-right">
-                        <img src="img/banner-main.png" alt="services" width="600px">
+                        <a href="#">
+                            <img src="img/banner-main.png" alt="services" width="600px">
+                        </a>
                     </div>
 
                     <div class="col text-center">
@@ -17,7 +19,7 @@
 
             <div class="row border-top border-bottom">
                 <div class="container">
-                    <div class="row" style="padding: 16px;">
+                    <div class="row justify-content-around" style="padding: 16px;">
                         <div class="col-auto">
                             <a class="btn-link-main" style="font-size: 18px" href="#">Письма</a>
                         </div>
@@ -41,11 +43,10 @@
             </div>
 
         </div>
-    </div>
 
-    <div class="section">
+    <div class="section" style="background-color: #f7f7f7">
         <div class="container">
-            <div class="row mt-4">
+            <div class="row pt-4 justify-content-around">
                 <div class="col-auto border footer-cards" style="width: 300px">
                     <a href="#" style="text-decoration: none; color: gray; line-height: 1;">
                         <row class="row">
@@ -87,12 +88,12 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row pt-4">
                 <div class="col-5">
-                    <span>2020 © АО Почта России</span>
+                    <span style="color: gray;">2020 © АО Почта России</span>
                 </div>
                 <div class="col">
-                    <div class="row">
+                    <div class="row float-right pr-3" style="color: gray">
                         <div class="col-auto">
                             <i class="fab fa-vk"></i>
                             <i class="fab fa-facebook-f"></i>
@@ -101,22 +102,22 @@
                             <i class="fab fa-twitter"></i>
                         </div>
                         <div class="col-auto">
-                            <a href="#">Раскрытие информации</a>
+                            <a class="btn-link-footer" href="#">Раскрытие информации</a>
                         </div>
                         <div class="col-auto">
-                            <a href="#">Вакансии</a>
+                            <a class="btn-link-footer" href="#">Вакансии</a>
                         </div>
                         <div class="col-auto">
-                            <a href="#">Пресс-центр</a>
+                            <a class="btn-link-footer" href="#">Пресс-центр</a>
                         </div>
                         <div class="col-auto">
-                            <a href="#">О компании</a>
+                            <a class="btn-link-footer" href="#">О компании</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+
 
     </div>
 @endsection
