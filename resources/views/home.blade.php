@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-
+<div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header bg-primary text-white">Сервис валидации почтовых адресов</div>
 
@@ -14,10 +14,10 @@
                         </div>
                     @endif
 
-                        @include('home_navbar')
+                    @include('home_navbar')
                 </div>
             </div>
         </div>
     </div>
-
+</div>
 @endsection
