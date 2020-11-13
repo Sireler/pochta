@@ -69,27 +69,9 @@ class HomeController extends Controller
 
     public function processUpload(Request $request)
     {
-
-
-
-
         $file = $request->file('file');
         $name = Str::random(6) . '.' . $file->getClientOriginalExtension();
         $file->storeAs('', $name);
-
-//
-//
-//
-//        Storage::disk('local')->put($name, $file);
-
-//
-//        dd($name);
-//
-//        dd(Storage::disk('local')->get($name));
-
-//        dd(storage_path());
-
-//        dd();
 
         $xlsx = \SimpleXLSX::parse(Storage::disk('local')->path($name));
         $rows = $xlsx->rows(0);
@@ -114,7 +96,6 @@ class HomeController extends Controller
                 $this->requestHeaders,
                 json_encode($query, JSON_UNESCAPED_UNICODE)
             );
-
 
             $processedData[$index][] = $response->body->addr->inaddr;
             $processedData[$index][] = $response->body->addr->outaddr;
