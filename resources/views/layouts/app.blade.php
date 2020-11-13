@@ -94,7 +94,7 @@
                                                     {{ Auth::user()->name }}
                                                 </a>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                        <a class="dropdown-item" href="#">Сервис валидации</a>
+                                                        <a class="dropdown-item" href="{{ route('home') }}">Сервис валидации</a>
                                                         <a class="dropdown-item" href="{{ route('logout') }}"
                                                            onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
