@@ -59,4 +59,9 @@ class HomeController extends Controller
 //        dd();
         return view('home');
     }
+
+    public function upload()
+    {
+        return view('home_upload');
+    }
 }

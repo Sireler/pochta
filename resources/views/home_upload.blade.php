@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                        @include('home_navbar')
+                    @include('home_navbar')
                 </div>
             </div>
         </div>
