@@ -19,6 +19,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home/upload', 'HomeController@upload')->name('home.upload');
+Route::post('/home/upload', 'HomeController@processUpload')->name('home.processUpload');
 
 Auth::routes();
 

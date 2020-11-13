@@ -64,4 +64,9 @@ class HomeController extends Controller
     {
         return view('home_upload');
     }
+
+    public function processUpload(Request $request)
+    {
+
+    }
 }
