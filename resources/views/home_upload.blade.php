@@ -20,7 +20,7 @@
                             @include('home_navbar')
                         </div>
                         <div class="col-auto">
-                            <form action="{{ route('home.processUpload') }}">
+                            <form enctype="multipart/form-data" method="POST" action="{{ route('home.processUpload') }}">
                                 @csrf
                                 <div class="custom-file my-3">
                                     <input name="file" type="file" class="custom-file-input" id="validatedCustomFile" required>
