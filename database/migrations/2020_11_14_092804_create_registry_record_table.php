@@ -16,11 +16,11 @@ class CreateRegistryRecordTable extends Migration
         Schema::create('registry_record', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->string('source_filename', 255);
-            $table->string('out_filename', 255);
-            $table->integer('rows_count');
-            $table->integer('rows_success');
-            $table->integer('rows_warning');
+            $table->string('source_filename', 255)->nullable();
+            $table->string('out_filename', 255)->nullable();
+            $table->integer('rows_count')->nullable();
+            $table->integer('rows_success')->nullable();
+            $table->integer('rows_warning')->nullable();
 
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
