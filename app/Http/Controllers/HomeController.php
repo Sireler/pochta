@@ -30,37 +30,19 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
+        $filesUploaded = $request->user()->reports()->count();
+        $rowsProcessed = $request->user()->reports()->sum('rows_count');
+        $successRowsProcessed = $request->user()->reports()->sum('rows_success');
+        $warningRowsProcessed = $request->user()->reports()->sum('rows_warning');
 
-//        $query = array(
-//            "version" => "ce2bedf1-f31c-45ed-b3a8-b67ac3d26b23",
-//            'fio' => 'Иванов Петр Васильевич',
-//            'addr' => [
-//                [
-//                    'val' => 'Российская федерация красногорск п. Новый д. 12',
-//                ],
-//            ],
-//        );
-//
-//        $response = UnirestRequest::post(
-//            'https://address.pochta.ru/validate/api/v7_1',
-//            $this->requestHeaders,
-//            json_encode($query, JSON_UNESCAPED_UNICODE)
-//        );
-//
-//
-//        dd($response);
-//        $response->code;        // HTTP Status code
-//        $response->headers;     // Headers
-//        dd($response->body);        // Parsed body
-//        $response->raw_body;    // Unparsed body
-//
-//
-//
-//
-//        dd();
-        return view('home');
+        return view('home', [
+            'filesUploaded' => $filesUploaded,
+            'rowsProcessed' => $rowsProcessed,
+            'successRowsProcessed' => $successRowsProcessed,
+            'warningRowsProcessed' => $warningRowsProcessed
+        ]);
     }
 
     public function upload()
