@@ -22,11 +22,11 @@
                             <div class="col-md-9">
                                 <table class="table table-responsive">
                                     <thead>
-                                    <tr>
+                                    <tr class="text-center" style="font-size: 14px;">
                                         <th scope="col">Обработано строк</th>
                                         <th scope="col">Успешно</th>
                                         <th scope="col">Ошибок</th>
-                                        <th scope="col">Дата</th>
+                                        <th scope="col">Дата/Время</th>
                                         <th scope="col">Статус обработки</th>
                                         <th scope="col">Управление</th>
                                     </tr>
@@ -35,25 +35,27 @@
                                     @foreach($records as $record)
                                         <tr>
                                             <td>
-                                                <div class="alert alert-primary">
+                                                <div class="alert alert-primary text-center font-weight-bold">
                                                     {{ $record->rows_count ?? 'Подождите, файл обрабатывается' }}
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="alert alert-success">
+                                                <div class="alert alert-success text-center font-weight-bold">
                                                     {{ $record->rows_success }}
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="alert alert-warning">
+                                                <div class="alert alert-warning text-center font-weight-bold">
                                                     {{ $record->rows_warning }}
                                                 </div>
                                             </td>
                                             <td>
-                                                {{ date($record->created_at->format('d.m.Y H:i')) }}
+                                                <div class="mt-3">
+                                                    {{ date($record->created_at->format('d.m.Y H:i')) }}
+                                                </div>
                                             </td>
                                             <td>
-                                                <div class="progress">
+                                                <div class="progress mt-3">
                                                     <div id="progress-{{ $record->id }}" class="progress-bar" role="progressbar" style="width: {{ $record->progress * 100 }}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
                                                         {{ $record->progress * 100 }}%
                                                     </div>
@@ -61,7 +63,7 @@
                                             </td>
                                             <td>
 
-                                                <div class="dropdown">
+                                                <div class="dropdown mt-1">
                                                     <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         Управление
                                                     </button>
