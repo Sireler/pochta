@@ -64,7 +64,7 @@ class HomeController extends Controller
         ]);
 
         $job = (new ProcessRecord($record))
-            ->delay(Carbon::now()->addSecond(2));
+            ->delay(Carbon::now()->addSecond(1));
 
         dispatch($job);
 
@@ -100,5 +100,20 @@ class HomeController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    public function workProgress(Request $request)
+    {
+        $records = $request->user()->reports()->where('progress', '<>', '1')->get();
+        $data = [];
+
+        foreach ($records as $record) {
+            $data[] = [
+                'record' => $record->id,
+                'progress' => $record->progress
+            ];
+        }
+
+        return response()->json($data);
     }
 }

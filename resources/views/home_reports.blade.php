@@ -54,7 +54,9 @@
                                             </td>
                                             <td>
                                                 <div class="progress">
-                                                    <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                                                    <div id="progress-{{ $record->id }}" class="progress-bar" role="progressbar" style="width: {{ $record->progress * 100 }}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                                        {{ $record->progress * 100 }}%
+                                                    </div>
                                                 </div>
                                             </td>
                                             <td>
@@ -90,4 +92,31 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $( document ).ready(function() {
+
+            $.get('/home/workProgress', function(data) {
+                for (let i = 0; i < data.length; i++) {
+                    let el = $('#progress-' + data[i].record);
+
+                    el.css('width', data[i].progress * 100 + '%');
+                    el.html(data[i].progress * 100 + '%');
+                }
+            });
+
+            setInterval(function(){
+
+
+                $.get('/home/workProgress', function(data) {
+                    for (let i = 0; i < data.length; i++) {
+                        let el = $('#progress-' + data[i].record);
+
+                        el.css('width', data[i].progress * 100 + '%');
+                        el.html(data[i].progress * 100 + '%');
+                    }
+                });
+            }, 2000);
+        });
+    </script>
 @endsection

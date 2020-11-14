@@ -23,6 +23,7 @@ Route::post('/home/upload', 'HomeController@processUpload')->name('home.processU
 
 Route::get('/home/reports', 'HomeController@reports')->name('home.reports');
 Route::get('/home/download', 'HomeController@download')->name('home.download');
+Route::get('/home/workProgress', 'HomeController@workProgress')->name('home.workProgress');
 
 Auth::routes();
 
