@@ -20,7 +20,7 @@
                                 @include('home_navbar')
                             </div>
                             <div class="col-auto">
-                                Content
+                                Здравствуйте, {{ Auth::user()->name }}
                             </div>
                         </div>
                     </div>

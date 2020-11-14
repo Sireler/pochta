@@ -77,7 +77,16 @@ class HomeController extends Controller
         $rows = $xlsx->rows(0);
 
         $processedData = [];
-        $processedData[0] = ['Исходный адрес', 'Полученный адрес'];
+        $processedData[0] = [
+            'Исходный адрес',
+            'Исходный индекс',
+            'Полученный адрес',
+            'Статус',
+            'Нераспознанные элементы',
+            'Код неточности',
+            'Время ответа',
+            'Индекс(index)'
+        ];
         $index = 1;
         foreach ($rows as $row) {
 
@@ -98,7 +107,13 @@ class HomeController extends Controller
             );
 
             $processedData[$index][] = $response->body->addr->inaddr;
+            $processedData[$index][] = $response->body->index->inindex;
             $processedData[$index][] = $response->body->addr->outaddr;
+            $processedData[$index][] = $response->body->state;
+            $processedData[$index][] = '0';
+            $processedData[$index][] = $response->body->addr->accuracy;
+            $processedData[$index][] = '0';
+            $processedData[$index][] = $response->body->addr->index ?? 0;
 
             $index++;
         }
