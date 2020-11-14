@@ -42,6 +42,8 @@ class ProcessRecord implements ShouldQueue
         $xlsx = \SimpleXLSX::parse(Storage::disk('local')->path($this->registryRecord->source_filename));
         $rows = $xlsx->rows(0);
 
+        $num_rows = count($rows);
+
         $processedData = [];
         $processedData[0] = [
             'Исходный адрес',
@@ -124,6 +126,17 @@ class ProcessRecord implements ShouldQueue
             if ($response->body->state == '301') {
                 $successCount++;
             }
+
+            if ($index == intval($num_rows / 4)) {
+                $this->registryRecord->progress = 0.25;
+                $this->registryRecord->save();
+            } else if ($index == intval($num_rows / 2)) {
+                $this->registryRecord->progress = 0.5;
+                $this->registryRecord->save();
+            } else if ($index == intval($num_rows / 1.25)) {
+                $this->registryRecord->progress = 0.8;
+                $this->registryRecord->save();
+            }
         }
 
         $xlsx = \SimpleXLSXGen::fromArray( $processedData );
@@ -134,6 +147,7 @@ class ProcessRecord implements ShouldQueue
         $this->registryRecord->rows_count = $index;
         $this->registryRecord->rows_success = $successCount;
         $this->registryRecord->rows_warning = $index - $successCount;
+        $this->registryRecord->progress = 1.0;
 
         $this->registryRecord->save();
     }

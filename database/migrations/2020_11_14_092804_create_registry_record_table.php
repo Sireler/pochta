@@ -21,6 +21,7 @@ class CreateRegistryRecordTable extends Migration
             $table->integer('rows_count')->nullable();
             $table->integer('rows_success')->nullable();
             $table->integer('rows_warning')->nullable();
+            $table->float('progress')->default(0);
 
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');

@@ -25,8 +25,9 @@
                                     <tr>
                                         <th scope="col">Обработано строк</th>
                                         <th scope="col">Успешно</th>
-                                        <th scope="col">Предупреждение</th>
+                                        <th scope="col">Ошибок</th>
                                         <th scope="col">Дата</th>
+                                        <th scope="col">Статус обработки</th>
                                         <th scope="col">Управление</th>
                                     </tr>
                                     </thead>
@@ -50,6 +51,11 @@
                                             </td>
                                             <td>
                                                 {{ date($record->created_at->format('d.m.Y H:i')) }}
+                                            </td>
+                                            <td>
+                                                <div class="progress">
+                                                    <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                                                </div>
                                             </td>
                                             <td>
 
