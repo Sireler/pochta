@@ -54,6 +54,13 @@ class HomeController extends Controller
 
     public function processUpload(Request $request)
     {
+        $record = $request->user()->reports()->where('progress', '<>', '1')->count();
+
+        if ($record > 0) {
+            return redirect()->back()->with('status', 'Вы уже загрузили файл на проверку!');
+        }
+
+
         $file = $request->file('file');
         $name = Str::random(6) . '.' . $file->getClientOriginalExtension();
         $file->storeAs('', $name);
