@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header bg-primary text-white">Сервис валидации почтовых адресов</div>
+                    <div style="background-color: rgb(0, 85, 166)" class="card-header text-white">Сервис валидации почтовых адресов</div>
 
                     <div class="card-body">
                         <div class="row">
