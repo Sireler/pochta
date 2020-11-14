@@ -27,9 +27,10 @@
                             <form enctype="multipart/form-data" method="POST" action="{{ route('home.processUpload') }}">
                                 @csrf
                                 <div class="custom-file my-3">
-                                    <input name="file" type="file" class="custom-file-input" id="validatedCustomFile" required>
+                                    <input onchange="changeFile()" name="file" type="file" class="custom-file-input" id="validatedCustomFile" required>
                                     <label class="custom-file-label" for="validatedCustomFile">Выберите файл</label>
                                     <div class="invalid-feedback">Example invalid custom file feedback</div>
+                                    <span id="filename" class="font-weight-bold font-italic text-primary"></span>
                                 </div>
                                 <button onclick="sendFile()" id="submit-registry" type="submit" class="btn btn-primary">Отправить</button>
 
@@ -45,6 +46,13 @@
     </div>
 </div>
 <script>
+    function changeFile() {
+        let fileInput = document.querySelector('#validatedCustomFile');
+        if (fileInput.files.length > 0) {
+            document.querySelector('#filename').innerHTML = fileInput.files[0].name;
+        }
+    }
+
     function sendFile() {
         let fileInput = document.querySelector('#validatedCustomFile');
         if (fileInput.files.length > 0) {
