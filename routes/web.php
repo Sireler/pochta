@@ -21,5 +21,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home/upload', 'HomeController@upload')->name('home.upload');
 Route::post('/home/upload', 'HomeController@processUpload')->name('home.processUpload');
 
+Route::get('/home/reports', 'HomeController@reports')->name('home.reports');
+Route::get('/home/download', 'HomeController@download')->name('home.download');
+
 Auth::routes();
 

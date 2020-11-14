@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\RegistryRecord;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -88,6 +89,7 @@ class HomeController extends Controller
             'Индекс(index)'
         ];
         $index = 1;
+        $successCount = 0;
         foreach ($rows as $row) {
 
             $query = array(
@@ -116,9 +118,55 @@ class HomeController extends Controller
             $processedData[$index][] = $response->body->addr->index ?? 0;
 
             $index++;
+            if ($response->body->state == '301') {
+                $successCount++;
+            }
         }
 
         $xlsx = \SimpleXLSXGen::fromArray( $processedData );
-        $xlsx->downloadAs('normalized.xlsx'); // or downloadAs('books.xlsx')
+        $normalizedPath = storage_path('app/n_' . $name);
+        $xlsx->saveAs($normalizedPath); // or downloadAs('books.xlsx')
+
+        $record = RegistryRecord::create([
+            'source_filename' => $name,
+            'out_filename' => 'n_' . $name,
+            'rows_count' => $index,
+            'rows_success' => $successCount,
+            'rows_warning' => $index - $successCount,
+            'user_id' => $request->user()->id
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function reports(Request $request)
+    {
+        $records = $request->user()->reports()->orderBy('id', 'DESC')->get();
+
+        return view('home_reports', [
+            'records' => $records
+        ]);
+    }
+
+    public function download(Request $request)
+    {
+        $type = $request->get('type');
+        $record = RegistryRecord::where('id', $request->get('record_id'))->first();
+
+        if ($type == 'report') {
+            $filename = $record->out_filename;
+
+            if (Storage::disk('local')->exists($filename)) {
+                return Storage::disk('local')->download($filename);
+            }
+        } else {
+            $filename = $record->source_filename;
+
+            if (Storage::disk('local')->exists($filename)) {
+                return Storage::disk('local')->download($filename);
+            }
+        }
+
+        return redirect()->back();
     }
 }
