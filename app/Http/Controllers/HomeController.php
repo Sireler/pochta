@@ -156,7 +156,7 @@ class HomeController extends Controller
             'user_id' => $request->user()->id
         ]);
 
-        return redirect()->back();
+        return redirect()->route('home.reports');
     }
 
     public function reports(Request $request)
