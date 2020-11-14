@@ -21,6 +21,7 @@
                             </div>
                             <div class="col-md-9">
                                 <h2 class="text-secondary">Здравствуйте, {{ Auth::user()->name }}</h2>
+                                <div class="text-primary font-weight-bold">Ваша статистика:</div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="text-center alert alert-primary font-weight-bold">
