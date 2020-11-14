@@ -20,7 +20,7 @@
                                 @include('home_navbar')
                             </div>
                             <div class="col-md-9">
-                                <h4 class="text-secondary">Здравствуйте, {{ Auth::user()->name }}</h4>
+                                <h2 class="text-secondary">Здравствуйте, {{ Auth::user()->name }}</h2>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="text-center alert alert-primary font-weight-bold">
