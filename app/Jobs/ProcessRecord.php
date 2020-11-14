@@ -39,8 +39,29 @@ class ProcessRecord implements ShouldQueue
      */
     public function handle()
     {
-        $xlsx = \SimpleXLSX::parse(Storage::disk('local')->path($this->registryRecord->source_filename));
-        $rows = $xlsx->rows(0);
+        if (stripos($this->registryRecord->source_filename,'csv')) {
+            $fff = storage_path('app/' . $this->registryRecord->source_filename);
+            $filename = $fff;
+
+            $rows = [];
+
+            if (($h = fopen("{$filename}", "r")) !== FALSE)
+            {
+
+                while (($data = $this->customfgetcsv($h, 1000, ';')) !== FALSE)
+                {
+                    if (empty($data[3])) break;
+                    $rows[] = [$data[3]];
+                }
+
+                array_shift($rows);
+
+                fclose($h);
+            }
+        } else {
+            $xlsx = \SimpleXLSX::parse(Storage::disk('local')->path($this->registryRecord->source_filename));
+            $rows = $xlsx->rows(0);
+        }
 
         $num_rows = count($rows);
 
@@ -205,5 +226,12 @@ class ProcessRecord implements ShouldQueue
         }
 
         return '';
+    }
+
+    function customfgetcsv(&$handle, $length, $separator = ';'){
+        if (($buffer = fgets($handle, $length)) !== false) {
+            return explode($separator, iconv("CP1251", "UTF-8", $buffer));
+        }
+        return false;
     }
 }
