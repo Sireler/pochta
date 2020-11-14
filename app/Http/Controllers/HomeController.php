@@ -62,13 +62,25 @@ class HomeController extends Controller
         $processedData = [];
         $processedData[0] = [
             'Исходный адрес',
-            'Исходный индекс',
             'Полученный адрес',
             'Статус',
-            'Нераспознанные элементы',
-            'Код неточности',
-            'Время ответа',
-            'Индекс(index)'
+            'Комментарий',
+            'Индекс(index)',
+            'Страна(C)',
+            'Регион(R)',
+            'Район(A)',
+            'Населенный пункт(P)',
+            'Внутригородская территория(T)',
+            'Улично-дорожные элементы(S)',
+            'Номер дома(N)',
+            'Литера(N)',
+            'Дробь(D)',
+            'Корпус(E)',
+            'Строение(B)',
+            'Помещение(F)',
+            'Абонентский ящик (А/Я)(BOX)',
+            'Отделение почтовой связи (ОПС)(OPS)',
+            'Войсковая часть (В/Ч)(M)',
         ];
         $index = 1;
         $successCount = 0;
@@ -91,13 +103,40 @@ class HomeController extends Controller
             );
 
             $processedData[$index][] = $response->body->addr->inaddr;
-            $processedData[$index][] = $response->body->index->inindex;
             $processedData[$index][] = $response->body->addr->outaddr;
-            $processedData[$index][] = $response->body->state;
-            $processedData[$index][] = '0';
-            $processedData[$index][] = $response->body->addr->accuracy;
-            $processedData[$index][] = '0';
-            $processedData[$index][] = $response->body->addr->index ?? 0;
+
+            if ($response->body->state == '301') {
+                $processedData[$index][] = 'Адрес подтвержден';
+            } else if ($response->body->state == '302') {
+                $processedData[$index][] = 'Адрес подтвержден и он неполный';
+            } else if ($response->body->state == '303') {
+                $processedData[$index][] = 'Адресу сопоставлено несколько вариантов';
+            } else if ($response->body->state == '404') {
+                $processedData[$index][] = 'Ящик в указанном ОПС не найден';
+            }
+
+            $accuracy = str_split($response->body->addr->accuracy);
+            $text = $this->getAccuracyString($accuracy);
+
+            $processedData[$index][] = $text;
+
+            $processedData[$index][] = $response->body->addr->index ?? '';
+//            dd($response->body->addr->element);
+            $processedData[$index][] = $this->getElementContent('C', $response->body->addr->element);
+            $processedData[$index][] = $this->getElementContent('R', $response->body->addr->element);
+            $processedData[$index][] = $this->getElementContent('A', $response->body->addr->element);
+            $processedData[$index][] = $this->getElementContent('P', $response->body->addr->element);
+            $processedData[$index][] = $this->getElementContent('T', $response->body->addr->element);
+            $processedData[$index][] = $this->getElementContent('S', $response->body->addr->element);
+            $processedData[$index][] = $this->getElementContent('N', $response->body->addr->element);
+            $processedData[$index][] = $this->getElementContent('n', $response->body->addr->element);
+            $processedData[$index][] = $this->getElementContent('D', $response->body->addr->element);
+            $processedData[$index][] = $this->getElementContent('E', $response->body->addr->element);
+            $processedData[$index][] = $this->getElementContent('B', $response->body->addr->element);
+            $processedData[$index][] = $this->getElementContent('F', $response->body->addr->element);
+            $processedData[$index][] = $this->getElementContent('BOX', $response->body->addr->element);
+            $processedData[$index][] = $this->getElementContent('OPS', $response->body->addr->element);
+            $processedData[$index][] = $this->getElementContent('M', $response->body->addr->element);
 
             $index++;
             if ($response->body->state == '301') {
@@ -150,5 +189,60 @@ class HomeController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    private function getAccuracyString($accuracy) {
+        $text = '';
+
+        switch ($accuracy[0]) {
+            case '0':
+                $text .= 'Индекс определен по дому / квартире.';
+                break;
+            case '1':
+                $text .= 'Индекс определен по улице.';
+                break;
+            case '2':
+                $text .= 'Индекс определен по нас. пункту';
+                break;
+            case '3':
+                $text .= 'Индекс не определен';
+                break;
+        }
+
+        switch ($accuracy[1]) {
+            case '0':
+                $text .= ' Дом найден в ФИАС.';
+                break;
+            case '1':
+                $text .= ' Дом определен из запроса.';
+                break;
+            case '2':
+                $text .= ' Дом не определен.';
+                break;
+        }
+
+        switch ($accuracy[2]) {
+            case '0':
+                $text .= ' Квартира найдена в ФИАС.';
+                break;
+            case '1':
+                $text .= ' Квартира определена из запроса.';
+                break;
+            case '2':
+                $text .= ' Квартира не определена';
+                break;
+        }
+
+        return $text;
+    }
+
+    private function getElementContent($char, $elements) {
+        foreach ($elements as $el) {
+            if ($char == $el->content) {
+                return $el->val ?? '';
+            }
+        }
+
+        return '';
     }
 }
