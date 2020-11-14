@@ -35,7 +35,7 @@
                                         <tr>
                                             <td>
                                                 <div class="alert alert-primary">
-                                                    {{ $record->rows_count }}
+                                                    {{ $record->rows_count ?? 'Подождите, файл обрабатывается' }}
                                                 </div>
                                             </td>
                                             <td>
