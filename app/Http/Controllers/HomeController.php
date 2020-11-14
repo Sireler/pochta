@@ -121,7 +121,6 @@ class HomeController extends Controller
             $processedData[$index][] = $text;
 
             $processedData[$index][] = $response->body->addr->index ?? '';
-//            dd($response->body->addr->element);
             $processedData[$index][] = $this->getElementContent('C', $response->body->addr->element);
             $processedData[$index][] = $this->getElementContent('R', $response->body->addr->element);
             $processedData[$index][] = $this->getElementContent('A', $response->body->addr->element);

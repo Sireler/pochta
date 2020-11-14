@@ -23,17 +23,16 @@
                                 <table class="table table-responsive">
                                     <thead>
                                     <tr>
-                                        <th scope="col">Идентификатор</th>
                                         <th scope="col">Обработано строк</th>
                                         <th scope="col">Успешно</th>
                                         <th scope="col">Предупреждение</th>
+                                        <th scope="col">Дата</th>
                                         <th scope="col">Управление</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @foreach($records as $record)
                                         <tr>
-                                            <td>{{ $record->id }}</td>
                                             <td>
                                                 <div class="alert alert-primary">
                                                     {{ $record->rows_count }}
@@ -48,6 +47,9 @@
                                                 <div class="alert alert-warning">
                                                     {{ $record->rows_warning }}
                                                 </div>
+                                            </td>
+                                            <td>
+                                                {{ date($record->created_at->format('d.m.Y H:i')) }}
                                             </td>
                                             <td>
 
@@ -70,7 +72,6 @@
                                                         </form>
                                                     </div>
                                                 </div>
-
                                             </td>
                                         </tr>
                                     @endforeach
